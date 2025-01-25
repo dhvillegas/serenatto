@@ -1,3 +1,32 @@
+<?php
+    //Importa arquivo src/conexao-db.php
+    require "src/conexao-bd.php";
+    require "src/model/Produto.php";
+    require "src/repository/ProdutoRepository.php";
+
+    if (isset($_POST['cadastro'])){
+
+        $produto = new produto(
+            null,
+            $_POST['tipo'],
+            $_POST['nome'],
+            $_POST['descricao'],
+            $_POST['preco']
+
+        );
+        if (isset($_FILES['imagem'])){
+            $produto->setImagem(uniqid()."_".$_FILES['imagem']['name']);
+            move_uploaded_file($_FILES['imagem']['tmp_name'], $produto->getImagemPath());
+        }
+
+        $produtoRepository = new ProdutoRepository($pdo);
+        $produtoRepository->salvar($produto);
+        
+        header("Location: admin.php");
+
+    }
+?> 
+
 <!doctype html>
 <html lang="pt-br">
 <head>
@@ -24,7 +53,7 @@
         <img class= "ornaments" src="img/ornaments-coffee.png" alt="ornaments">
     </section>
     <section class="container-form">
-        <form action="#">
+        <form method="post" enctype="multipart/form-data">
 
             <label for="nome">Nome</label>
             <input type="text" id="nome" name="nome" placeholder="Digite o nome do produto" required>
@@ -49,7 +78,7 @@
 
             <input type="submit" name="cadastro" class="botao-cadastrar" value="Cadastrar produto"/>
         </form>
-    
+      
     </section>
 </main>
 
