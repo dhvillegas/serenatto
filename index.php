@@ -1,4 +1,31 @@
 <?php
+    session_start();
+ 
+    // import dependencies
+    require 'vendor/autoload.php';
+
+    // get the Mixpanel class instance, replace with your project token
+    $mp = Mixpanel::getInstance("6b31e334c5f590b2cbd9775dd7c598fd", array(
+        "debug"          => true,    // enable debug mode
+        "use_ssl"        => false   //Tell the consumer whether or not to use ssl
+        ));
+
+    // track an event
+    $mp->track("PageViewed", array("name" => "Homepage", "distinct_id" => $_SESSION['user_id'])); 
+
+    // create/update a profile for user id 12345
+    /*
+    $mp->people->set(12345, array(
+        '$first_name'       => "John",
+        '$last_name'        => "Doe",
+        '$email'            => "john.doe@example.com",
+        '$phone'            => "5555555555",
+        "Favorite Color"    => "red"
+    ));
+    */
+
+
+
     //Importa arquivo src/conexao-db.php
     require "src/conexao-bd.php";
     require "src/model/Produto.php";
@@ -29,6 +56,9 @@
 </head>
 <body>
     <main>
+        <div>
+            <?= isset($_SESSION['user_name']) == false ? "<a href=login.php>Efetuar Login</a>" : $_SESSION['user_name']?>
+         </div>
         <section class="container-banner">
             <div class="container-texto-banner">
                 <img src="img/logo-serenatto.png" class="logo" alt="logo-serenatto">

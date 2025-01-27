@@ -1,4 +1,17 @@
 <?php
+
+    // import dependencies
+    require 'vendor/autoload.php';
+
+    // get the Mixpanel class instance, replace with your project token
+    $mp = Mixpanel::getInstance("6b31e334c5f590b2cbd9775dd7c598fd", array(
+        "debug"          => true,    // enable debug mode
+        "use_ssl"        => false   //Tell the consumer whether or not to use ssl
+        ));
+
+    // track an event
+    $mp->track("PageViewed", array("name" => "Cadastrar Produto Page")); 
+
     //Importa arquivo src/conexao-db.php
     require "src/conexao-bd.php";
     require "src/model/Produto.php";

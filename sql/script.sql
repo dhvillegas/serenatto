@@ -27,4 +27,22 @@ INSERT INTO `serenatto`.`produtos` (`tipo`, `nome`, `descricao`, `imagem`, `prec
 INSERT INTO `serenatto`.`produtos` (`tipo`, `nome`, `descricao`, `imagem`, `preco`) VALUES ('Almoço', 'Fettuccine', 'Prato italiano autêntico da massa do fettuccine com peito de frango grelhado', 'fettuccine.jpg', '22.50');
 
 
+CREATE TABLE clients (
+    client_id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    client_name VARCHAR(50) NOT NULL,
+    razao_social VARCHAR(50) NOT NULL,
+    cnpj VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE users (
+    user_id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    client_id INT(11) NOT NULL, 
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT null,
+    user_name VARCHAR(50) NOT NULL,
+    user_email VARCHAR(50) NOT NULL,
+    user_phone VARCHAR(50),
+    user_admin BOOLEAN DEFAULT true,
+    FOREIGN KEY (client_id) REFERENCES clients(client_id)
+);
 
